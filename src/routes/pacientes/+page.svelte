@@ -11,6 +11,33 @@
 
     $title = "Pacientes";
 
+    let modalDelete;
+
+    onMount(() => {
+        modalDelete = new Modal(document.getElementById("modal-delete"), {backdrop: 'static'});
+    })
+
+    let pacienteDelecao = {};
+
+    function openModalDeletePaciente(paciente) {
+        pacienteDelecao = paciente;
+        modalDelete.show()
+    }
+
+    function handleDeletePaciente(paciente) {
+        api.delete(`/pacintes/${paciente.id}`)
+            .then(res => {
+                if (res.status !== 204)
+                    notifications.danger(`Houve um erro ao excluir o paciente ${paciente.nome}, atualize a página e tente novamente ou entre em contato com o suporte.`);
+
+                notifications.success(`Paciente ${paciente.nome} excluído com sucesso.`, 1500);
+                modalDelete.hide();
+            })
+            .catch(res => {
+                notifications.danger(`Houve um erro ao excluir o paciente ${paciente.nome}, atualize a página e tente novamente ou entre em contato com o suporte.`);
+            })
+    }
+
     const tableStructure = [
         {
             label: "Nome",
@@ -53,30 +80,12 @@
         const res = await api.get("/pacientes");
         return res.data;
     }
-
-    let isModalDelecaoPacienteOpen = false;
-    let pacienteDelecao = {};
-    let modalDelete;
-
-    function openModalDeletePaciente(paciente) {
-        isModalDelecaoPacienteOpen = true;
-        pacienteDelecao = paciente;
-        modalDelete.show()
-    }
-
-    function handleDeletePaciente(paciente) {
-        notifications.info(`Deletando paciente Deletando paciente Deletando paciente Deletando paciente ${paciente.nome}`, 100000)
-    }
-
-    onMount(() => {
-        modalDelete = new Modal(document.getElementById("modal-delete"));
-    })
 </script>
 
 <Table fetchApiData={fetchPacientes} tableActions={tableActions} tableStructure={tableStructure}
        loadingPhrase={loadingPhrase}/>
 
-<ModalDelete callbackDelecao={() => handleDeletePaciente(pacienteDelecao)}
+<ModalDelete callbackDelecao={() => handleDeletePaciente(pacienteDelecao)} callbackCloseModal={() => modalDelete.hide()}
              textoConfirmacao="Você tem certeza que deseja deletar o paciente {pacienteDelecao.nome}?"/>
 
 <div class="mt-6 flex justify-end">
@@ -85,4 +94,3 @@
         Novo
     </a>
 </div>
-
