@@ -1,19 +1,19 @@
-import { writable, derived } from "svelte/store";
+import { writable, derived } from 'svelte/store';
 
 const TIMEOUT = 300000;
 
 function createNotificationStore(timeout) {
     const _notifications = writable([]);
 
-    function send(message, type = "default", timeout) {
-        _notifications.update(state => {
+    function send(message, type = 'default', timeout) {
+        _notifications.update((state) => {
             return [...state, { id: id(), type, message, timeout }];
         });
     }
 
     function remove(notificationId) {
-        _notifications.update(state => {
-            return state.filter(notification => notification.id !== notificationId);
+        _notifications.update((state) => {
+            return state.filter((notification) => notification.id !== notificationId);
         });
     }
 
@@ -23,7 +23,7 @@ function createNotificationStore(timeout) {
         set($_notifications);
         if ($_notifications.length > 0) {
             const timer = setTimeout(() => {
-                _notifications.update(state => {
+                _notifications.update((state) => {
                     state.shift();
                     return state;
                 });
@@ -39,15 +39,15 @@ function createNotificationStore(timeout) {
         subscribe,
         send,
         remove,
-        default: (msg, timeout = TIMEOUT) => send(msg, "default", timeout),
-        danger: (msg, timeout = TIMEOUT) => send(msg, "danger", timeout),
-        warning: (msg, timeout = TIMEOUT) => send(msg, "warning", timeout),
-        success: (msg, timeout = TIMEOUT) => send(msg, "success", timeout),
+        default: (msg, timeout = TIMEOUT) => send(msg, 'default', timeout),
+        danger: (msg, timeout = TIMEOUT) => send(msg, 'danger', timeout),
+        warning: (msg, timeout = TIMEOUT) => send(msg, 'warning', timeout),
+        success: (msg, timeout = TIMEOUT) => send(msg, 'success', timeout)
     };
 }
 
 function id() {
     return '_' + Math.random().toString(36).substr(2, 9);
-};
+}
 
 export const notifications = createNotificationStore();

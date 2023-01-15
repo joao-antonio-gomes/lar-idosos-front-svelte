@@ -1,5 +1,5 @@
 <script>
-    import SidebarIcon from "./SidebarIcon.svelte";
+    import SidebarIcon from './SidebarIcon.svelte';
 
     export let icon;
     export let itemName;
@@ -8,9 +8,10 @@
 </script>
 
 <li>
-    <a href={itemLink}
-       class="flex items-center p-2 text-base font-normal text-white hover:text-blue-main rounded-lg hover:bg-white transition duration-75">
-        <SidebarIcon icon={icon}/>
+    <a
+        href={itemLink}
+        class="flex items-center p-2 text-base font-normal text-white hover:text-blue-main rounded-lg hover:bg-white transition duration-75">
+        <SidebarIcon {icon} />
         {#if isMenuOpen}
             <span class="ml-3">{itemName}</span>
         {/if}

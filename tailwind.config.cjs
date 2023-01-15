@@ -1,15 +1,15 @@
 const config = {
-    content: ["./src/**/*.{html,js,svelte,ts}"],
+    content: ['./src/**/*.{html,js,svelte,ts}'],
 
     theme: {
         extend: {
             colors: {
                 'blue-main': '#33ACE3'
             }
-        },
+        }
     },
 
-    plugins: [],
+    plugins: []
 };
 
 module.exports = config;

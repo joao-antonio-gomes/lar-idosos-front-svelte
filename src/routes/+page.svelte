@@ -1,5 +1,5 @@
 <script>
-    import {title} from "../store.js";
+    import { title } from '../store.js';
 
-    $title = "Início"
+    $title = 'Início';
 </script>
