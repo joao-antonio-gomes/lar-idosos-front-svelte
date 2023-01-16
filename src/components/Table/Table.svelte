@@ -19,7 +19,7 @@
         const isPaginaInicial: boolean = pagina === 1;
         const possivelNumeroItensMaximoPag: number = pagina * itensPorPagina;
         const temMaisItensQueTotal: boolean = possivelNumeroItensMaximoPag > total;
-        return isPaginaInicial ? itensPorPagina : temMaisItensQueTotal ? total : possivelNumeroItensMaximoPag;
+        return temMaisItensQueTotal ? total : isPaginaInicial ? itensPorPagina : possivelNumeroItensMaximoPag;
     }
 
     function getItensPorPagina(pagina: number, itensPorPagina: number, total: number) {
